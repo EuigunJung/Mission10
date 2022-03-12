@@ -7,7 +7,7 @@
     {color: rgb(220, 53, 69);font-weight: 500;}
 </style>
 
-<h2 class="bg-@ThemeColor text-white text-center p-1">@TitleText a Book </h2>
+<h2 class="bg-@ThemeColor text-black text-center p-1">@TitleText a Book Information </h2>
 <EditForm Model="b" OnValidSubmit="SaveBook">
     <DataAnnotationsValidator></DataAnnotationsValidator>
 
@@ -63,6 +63,7 @@
         <span class="input-group-text">$</span>
         <InputNumber class="form-control"  @bind-Value="@b.Price"></InputNumber>
     </div>
+    <br>
     <button class="btn btn-@ThemeColor" type="submit">Save</button>
     <NavLink class="btn btn-secondary" href="/admin/books">Cancel</NavLink>
 
@@ -70,6 +71,7 @@
 
 @code {
     [Parameter]
+    //Setting the id to be passed through the url
     public long Id { get; set; } = 0;
     public string ThemeColor => Id == 0 ? "primary" : "warning";
     public string TitleText => Id == 0 ? "Create" : "Edit";
@@ -87,7 +89,7 @@
     }
 
     public void SaveBook()
-    {
+    {   //Create book when there is no such information about a certain book 
         if (Id == 0)
         {
             repo.CreateBook(b);
@@ -96,9 +98,10 @@
         {
             repo.SaveBook(b);
         }
+        //This forces to bring the DB from the server by navigating to the root admin page 
         NavManager.NavigateTo("/admin/books", true);
     }
-
+    
     [Inject]
     public NavigationManager NavManager { get; set; }
 

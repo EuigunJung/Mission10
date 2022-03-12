@@ -2,18 +2,18 @@
 
 @inherits LayoutComponentBase
 
-<div class="bg-info text-white p-2">
+<div class="bg-success text-white p-0">
     <span class="navbar-brand m-lg-2">Bookstore Adminitration Page</span>
 </div>
 
-<div class="container-fluid">
+<div class="table">
     <div class="row p-2">
         <div class="col-3">
             <div class="d-grid gap-2">
                 <NavLink class="btn btn-block btn-outline-primary" href="/admin/books"
-                         ActiveClass="btn-primary text-white" Match="NavLinkMatch.Prefix">Books Admin</NavLink>
+                         ActiveClass="btn-primary text-white" Match="NavLinkMatch.Prefix">Admin: Books</NavLink>
                 <NavLink class="btn btn-block btn-outline-primary" href="/admin/checkouts"
-                         ActiveClass="btn-primary text-white" Match="NavLinkMatch.Prefix">Checkout Admin</NavLink>
+                         ActiveClass="btn-primary text-white" Match="NavLinkMatch.Prefix">Admin: Checkout Orders</NavLink>
             </div>
         </div>
 
