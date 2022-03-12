@@ -1,0 +1,41 @@
+﻿@page "/admin/checkouts"
+@inherits OwningComponentBase<ICheckoutRepository>
+
+@* Passing in each of the parameters that is looking for, based on the 2 tables below *@
+<CheckoutTable TableTitle="Ordered" Checkouts="OrderedBooks" ButtonLabel="Ship Book(s)" OrderSelected="ShipBook"></CheckoutTable>
+<CheckoutTable TableTitle="Shipped" Checkouts="ShippedBooks" ButtonLabel="Cancel Shipping" OrderSelected="CancelShipping"></CheckoutTable>
+
+@* Updating the data asynchoronically from all the checkouts  *@
+<button class="btn btn-info" @onclick="@(x => UpdateData())">Refresh Data</button>
+
+
+@code {
+    //pulling the information by looping through these three IEnumerables 
+    public ICheckoutRepository repo => Service;
+    public IEnumerable<Checkout> AllOrders { get; set; }
+    public IEnumerable<Checkout> OrderedBooks { get; set; }
+    public IEnumerable<Checkout> ShippedBooks { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        await UpdateData();
+    }
+
+    public async Task UpdateData()
+    {
+        AllOrders = await repo.Checkouts.ToListAsync();
+        OrderedBooks = AllOrders.Where(x => !x.CheckoutReceived);
+        ShippedBooks = AllOrders.Where(x => x.CheckoutReceived);
+    }
+
+    public void ShipBook(int id) => UpdateShipping(id, true);
+    public void CancelShipping(int id) => UpdateShipping(id, false);
+    private void UpdateShipping(int id, bool shipped)
+    {
+        Checkout c = repo.Checkouts.FirstOrDefault(x => x.PurchaseId == id);
+        c.CheckoutReceived = shipped;
+        repo.SaveCheckout(c);
+    }
+
+}

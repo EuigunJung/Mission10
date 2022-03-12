@@ -1,0 +1,25 @@
+﻿@* This is the admin page *@
+
+@page "/admin"
+@model Mission10.Pages.Admin.IndexModel
+
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Bookstore Admin</title>
+    @* Default URL and a default target for all admin links on a page *@
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <base href="/" />
+
+    @* Drop in this component in the Blazor. *@
+</head>
+    <body>
+        <component type="typeof(Mission10.Pages.Admin.Routed)" render-mode="Server"/>
+        <script src="/_framework/blazor.server.js"></script>
+    </body>
+</html>
